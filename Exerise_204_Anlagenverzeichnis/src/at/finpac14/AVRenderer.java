@@ -1,5 +1,5 @@
 
-package ex0005;
+package at.finpac14;
 
 import java.awt.Component;
 import javax.swing.JTable;
