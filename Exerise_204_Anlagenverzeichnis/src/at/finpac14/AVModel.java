@@ -1,11 +1,15 @@
 package at.finpac14;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Scanner;
 import javax.swing.table.AbstractTableModel;
 
 public class AVModel extends AbstractTableModel
@@ -71,11 +75,37 @@ public class AVModel extends AbstractTableModel
 
     public void load() throws FileNotFoundException, IOException, ClassNotFoundException
     {
-        FileInputStream fis = new FileInputStream(filename);
-        ObjectInputStream ois = new ObjectInputStream(fis);
-        liste.clear();
-        liste = (ArrayList<Anlagenverzeichnis>) ois.readObject();
+        String line = " ";
+        BufferedReader fileReader = new BufferedReader(new FileReader(filename));
+        String wert = "";
+        fileReader.readLine();
+
+        while ((line = fileReader.readLine()) != null) {
+            String[] tokens = line.split(";");
+            
+            String bez = tokens[0];
+            
+            double anlagenwert;
+            if(tokens[1].length() > 3)
+            {
+                wert = tokens[1].replace('.', '_').trim();
+                String[] los = wert.split("_");
+                anlagenwert = Double.parseDouble(los[0] + "" + los[1]);
+            }
+            else
+            {
+                anlagenwert = Double.parseDouble(tokens[1]);
+            }
+            
+            double inbetriebn = Double.parseDouble(tokens[2].replace(',', '.'));
+            String nutzungsdau = tokens[3].replace(',', '.');
+            double nd = Double.parseDouble(nutzungsdau);
+//            System.out.println(tokens[3].replace(',', '.'));
+            liste.add(new Anlagenverzeichnis(bez, anlagenwert, inbetriebn, nd));
+        }
+        fileReader.close();
     }
-
-
 }
+
+
+
