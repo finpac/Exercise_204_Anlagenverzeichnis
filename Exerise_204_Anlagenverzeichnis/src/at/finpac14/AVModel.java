@@ -97,13 +97,16 @@ public class AVModel extends AbstractTableModel
                 anlagenwert = Double.parseDouble(tokens[1]);
             }
             
-            double inbetriebn = Double.parseDouble(tokens[2].replace(',', '.'));
+            String inbetriebn = tokens[2];
             String nutzungsdau = tokens[3].replace(',', '.');
             double nd = Double.parseDouble(nutzungsdau);
-//            System.out.println(tokens[3].replace(',', '.'));
             liste.add(new Anlagenverzeichnis(bez, anlagenwert, inbetriebn, nd));
         }
         fileReader.close();
+    }
+
+    public ArrayList<Anlagenverzeichnis> getListe() {
+        return liste;
     }
 }
 

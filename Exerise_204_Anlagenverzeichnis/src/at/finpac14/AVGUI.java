@@ -95,6 +95,11 @@ public class AVGUI extends javax.swing.JFrame
 
         btUpdate.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btUpdate.setText("Update Table");
+        btUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                onUpdateTable(evt);
+            }
+        });
         jPanel1.add(btUpdate);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -140,6 +145,38 @@ public class AVGUI extends javax.swing.JFrame
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void onUpdateTable(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onUpdateTable
+        int year = Integer.parseInt((String) cbYears.getSelectedItem());
+        for (Anlagenverzeichnis liste : model.getListe()) 
+        {
+            String yearsOfInbetiebnahme =  liste.getInbetriebnahme();
+            String[] tokenbyYear = yearsOfInbetiebnahme.split(",");
+            int yearOfCreation = Integer.parseInt(tokenbyYear[0]);
+            if(year - yearOfCreation >= 0)
+            {
+                if(yearsOfInbetiebnahme.contains(","))
+                {
+                    liste.setBihNutzungsdauer(liste.getNutzungsdauer() - (liste.getNutzungsdauer() - (year - yearOfCreation))-0.5);
+                    System.out.println("true");
+                }
+                else
+                {
+                    liste.setBihNutzungsdauer(liste.getNutzungsdauer()- (liste.getNutzungsdauer() - (year - yearOfCreation)));
+                    System.out.println("false");
+                }
+            }
+            if(liste.getBihNutzungsdauer() != 0)
+            {
+                double bishafa = liste.getAnschaffungswert()/liste.getNutzungsdauer();
+                liste.setAfABisher(bishafa * liste.getBihNutzungsdauer());
+                liste.setAfAdJ(bishafa);
+                liste.setWertVorAfA(liste.getAnschaffungswert()-liste.getAfABisher());
+                liste.setBuchwert(liste.getWertVorAfA()-liste.getAfAdJ());
+            }
+            repaint();       
+        }
+    }//GEN-LAST:event_onUpdateTable
 
     /**
      * @param args the command line arguments

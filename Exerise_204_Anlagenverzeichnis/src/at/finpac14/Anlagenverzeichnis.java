@@ -14,7 +14,7 @@ public class Anlagenverzeichnis
 
     private String bezeichnung;
     private double anschaffungswert;
-    private double inbetriebnahme;
+    private String inbetriebnahme;
     private double nutzungsdauer;
     private double bihNutzungsdauer;
     private double AfABisher;
@@ -22,7 +22,7 @@ public class Anlagenverzeichnis
     private double afAdJ;
     private double buchwert;
 
-    public Anlagenverzeichnis(String bezeichnung, double anschaffungswert, double inbetriebnahme, double nutzungsdauer)
+    public Anlagenverzeichnis(String bezeichnung, double anschaffungswert, String inbetriebnahme, double nutzungsdauer)
     {
         this.bezeichnung = bezeichnung;
         this.anschaffungswert = anschaffungswert;
@@ -40,7 +40,7 @@ public class Anlagenverzeichnis
         return anschaffungswert;
     }
 
-    public double getInbetriebnahme()
+    public String getInbetriebnahme()
     {
         return inbetriebnahme;
     }
@@ -95,4 +95,7 @@ public class Anlagenverzeichnis
         this.afAdJ = afAdJ;
     }
 
+    public void setBuchwert(double buchwert) {
+        this.buchwert = buchwert;
+    }
 }
